@@ -13,6 +13,7 @@ body {
 
 .KomaruStart {
     display: flex;
+    flex-wrap: wrap;
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 20px;
@@ -21,17 +22,14 @@ body {
 }
 
 .KomaruStart a {
-    margin-right: 20px;
+    margin: 10px;
     background-color: lightsteelblue;
     padding: 10px 15px;
     border-radius: 5px;
     text-decoration: none;
     color: black;
     transition: background-color 0.3s;
-}
-
-.KomaruStart a:last-child {
-    margin-right: 0;
+    font-size: 1em;
 }
 
 .KomaruStart a:hover {
@@ -48,8 +46,8 @@ body {
 
 #clicker-img {
     border-radius: 50%;
-    width: 350px;
-    height: 350px;
+    width: 250px;  /* Меньше для мобильных */
+    height: 250px;
     cursor: pointer;
     transition: transform 0.1s;
 }
@@ -62,6 +60,7 @@ body {
     color: white;
     margin-bottom: 20px;
     font-size: 1.5em;
+    text-align: center;
 }
 
 footer {
@@ -70,6 +69,7 @@ footer {
     margin-top: 20px;
     padding: 10px;
     background-color: #1a1a1a;
+    font-size: 0.9em;
 }
 
 main {
@@ -94,7 +94,8 @@ main {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
 }
 
 .upgrade button {
@@ -113,4 +114,46 @@ main {
 
 h1, h2 {
     text-align: center;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    #clicker-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .KomaruStart a {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+
+    .Coins_Count {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .KomaruStart {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .KomaruStart a {
+        width: 100%;
+        text-align: center;
+    }
+
+    #clicker-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .Coins_Count {
+        font-size: 1.1em;
+    }
+
+    footer {
+        font-size: 0.8em;
+    }
 }
