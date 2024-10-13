@@ -68,12 +68,13 @@ function buyUpgrade(upgradeId) {
 
     switch(upgradeId) {
         case 'click-upgrade':
+            // Проверка наличия монет для улучшения клика
             if (coins >= clickUpgradeCost) {
-                coins -= clickUpgradeCost;
-                clickPower *= 2;
-                clickUpgradeCost *= 2;
-                updateDisplay();
-                saveData();
+                coins -= clickUpgradeCost; // Списываем стоимость улучшения
+                clickPower *= 2; // Увеличиваем силу клика
+                clickUpgradeCost *= 2; // Увеличиваем стоимость следующего улучшения
+                updateDisplay(); // Обновляем отображение
+                saveData(); // Сохраняем данные
                 alert('Улучшение куплено! Теперь каждый клик приносит в 2 раза больше монет.');
                 console.log('Click upgrade purchased successfully');
             } else {
@@ -82,18 +83,22 @@ function buyUpgrade(upgradeId) {
             }
             break;
         case 'auto-clicker':
+            // Проверка наличия монет для улучшения автокликера
             if (coins >= autoClickerCost) {
-                coins -= autoClickerCost;
-                autoClickerCount++;
-                autoClickerCost = Math.floor(autoClickerCost * 1.5);
-                updateDisplay();
-                saveData();
+                coins -= autoClickerCost; // Списываем стоимость улучшения
+                autoClickerCount++; // Увеличиваем счетчик автокликеров
+                autoClickerCost = Math.floor(autoClickerCost * 1.5); // Увеличиваем стоимость следующего автокликера
+                updateDisplay(); // Обновляем отображение
+                saveData(); // Сохраняем данные
                 alert('Автокликер куплен! Теперь у вас ' + autoClickerCount + ' автокликер(ов).');
                 console.log('Auto-clicker purchased successfully');
             } else {
                 alert('Недостаточно монет для покупки автокликера.');
                 console.log('Not enough coins to purchase auto-clicker');
             }
+            break;
+        default:
+            console.log('Unknown upgrade ID:', upgradeId);
             break;
     }
     console.log('After purchase:', { coins, clickPower, clickUpgradeCost, autoClickerCount, autoClickerCost });
