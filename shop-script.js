@@ -3,23 +3,38 @@ let coins = 0;
 let clicks = 0;
 let clickPower = 1;
 let clickUpgradeCost = 200;
+let autoClickerCount = 0;
+let autoClickerCost = 500;
+let lastUpdateTime = Date.now();
 
 // Функция для сохранения данных в localStorage
 function saveData() {
-    localStorage.setItem('komaruCoins', coins);
-    localStorage.setItem('komaruClicks', clicks);
-    localStorage.setItem('komaruClickPower', clickPower);
-    localStorage.setItem('komaruClickUpgradeCost', clickUpgradeCost);
-    console.log('Data saved:', { coins, clicks, clickPower, clickUpgradeCost });
+    const saveObject = {
+        coins,
+        clicks,
+        clickPower,
+        clickUpgradeCost,
+        autoClickerCount,
+        autoClickerCost,
+        lastUpdateTime: Date.now()
+    };
+    localStorage.setItem('komaruGameData', JSON.stringify(saveObject));
+    console.log('Data saved:', saveObject);
 }
 
 // Функция для загрузки данных из localStorage
 function loadData() {
-    coins = parseInt(localStorage.getItem('komaruCoins')) || 0;
-    clicks = parseInt(localStorage.getItem('komaruClicks')) || 0;
-    clickPower = parseInt(localStorage.getItem('komaruClickPower')) || 1;
-    clickUpgradeCost = parseInt(localStorage.getItem('komaruClickUpgradeCost')) || 200;
-    console.log('Data loaded:', { coins, clicks, clickPower, clickUpgradeCost });
+    const savedData = JSON.parse(localStorage.getItem('komaruGameData'));
+    if (savedData) {
+        coins = savedData.coins || 0;
+        clicks = savedData.clicks || 0;
+        clickPower = savedData.clickPower || 1;
+        clickUpgradeCost = savedData.clickUpgradeCost || 200;
+        autoClickerCount = savedData.autoClickerCount || 0;
+        autoClickerCost = savedData.autoClickerCost || 500;
+        lastUpdateTime = savedData.lastUpdateTime || Date.now();
+        console.log('Data loaded:', savedData);
+    }
 }
 
 // Функция для обновления отображения монет и кликов
@@ -27,12 +42,14 @@ function updateDisplay() {
     const coinsElement = document.getElementById('coins');
     const countElement = document.getElementById('count');
     const upgradeCostElement = document.getElementById('click-upgrade-cost');
+    const autoClickerCostElement = document.getElementById('auto-clicker-cost');
 
-    if (coinsElement) coinsElement.textContent = coins;
-    if (countElement) countElement.textContent = clicks;
+    if (coinsElement) coinsElement.textContent = Math.floor(coins);
+    if (countElement) countElement.textContent = Math.floor(clicks);
     if (upgradeCostElement) upgradeCostElement.textContent = clickUpgradeCost;
+    if (autoClickerCostElement) autoClickerCostElement.textContent = autoClickerCost;
 
-    console.log('Display updated:', { coins, clicks, clickUpgradeCost });
+    console.log('Display updated:', { coins, clicks, clickUpgradeCost, autoClickerCost });
 }
 
 // Функция для обработки клика по изображению
@@ -47,7 +64,7 @@ function handleClick() {
 // Функция для покупки улучшения
 function buyUpgrade(upgradeId) {
     console.log('Attempting to buy upgrade:', upgradeId);
-    console.log('Before purchase:', { coins, clickPower, clickUpgradeCost });
+    console.log('Before purchase:', { coins, clickPower, clickUpgradeCost, autoClickerCount, autoClickerCost });
 
     switch(upgradeId) {
         case 'click-upgrade':
@@ -58,20 +75,55 @@ function buyUpgrade(upgradeId) {
                 updateDisplay();
                 saveData();
                 alert('Улучшение куплено! Теперь каждый клик приносит в 2 раза больше монет.');
-                console.log('Upgrade purchased successfully');
-                console.log('After purchase:', { coins, clickPower, clickUpgradeCost });
+                console.log('Click upgrade purchased successfully');
             } else {
                 alert('Недостаточно монет для покупки улучшения.');
-                console.log('Not enough coins to purchase upgrade');
+                console.log('Not enough coins to purchase click upgrade');
             }
             break;
-        // Здесь можно добавить другие улучшения
+        case 'auto-clicker':
+            if (coins >= autoClickerCost) {
+                coins -= autoClickerCost;
+                autoClickerCount++;
+                autoClickerCost = Math.floor(autoClickerCost * 1.5);
+                updateDisplay();
+                saveData();
+                alert('Автокликер куплен! Теперь у вас ' + autoClickerCount + ' автокликер(ов).');
+                console.log('Auto-clicker purchased successfully');
+            } else {
+                alert('Недостаточно монет для покупки автокликера.');
+                console.log('Not enough coins to purchase auto-clicker');
+            }
+            break;
     }
+    console.log('After purchase:', { coins, clickPower, clickUpgradeCost, autoClickerCount, autoClickerCost });
+}
+
+// Функция для расчета офлайн прогресса
+function calculateOfflineProgress() {
+    const currentTime = Date.now();
+    const timeDiff = (currentTime - lastUpdateTime) / 1000; // разница в секундах
+    const offlineClicks = autoClickerCount * clickPower * timeDiff;
+    coins += offlineClicks;
+    clicks += offlineClicks;
+    console.log('Offline progress calculated:', { timeDiff, offlineClicks });
+    lastUpdateTime = currentTime;
+}
+
+// Функция автокликера
+function autoClick() {
+    const clicksToAdd = autoClickerCount * clickPower;
+    coins += clicksToAdd;
+    clicks += clicksToAdd;
+    updateDisplay();
+    saveData();
+    console.log('Auto-click performed:', { coins, clicks, autoClickerCount });
 }
 
 // Инициализация после загрузки страницы
 document.addEventListener('DOMContentLoaded', function() {
     loadData();
+    calculateOfflineProgress();
     updateDisplay();
     
     // Привязка обработчика к изображению кликера
@@ -85,6 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
     upgradeButtons.forEach(button => {
         button.addEventListener('click', () => buyUpgrade(button.getAttribute('upgrade-id')));
     });
+
+    // Запуск автокликера
+    setInterval(autoClick, 1000);
+
+    // Сохранение данных каждые 10 секунд
+    setInterval(saveData, 10000);
 
     console.log('Initialization complete');
 });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="KomaruStart">
-        <a href="index.html">Вернуться к игре</a>
-    </div>
+   <ul class="KomaruStart">
+    <a href="index.html">Вернуться к игре</a>
+    </ul>
 
-    <main>
+    <main role="main">
         <h1>Komaru Shop</h1>
+
         <div id="upgrades">
             <div class="upgrade" upgrade-id="click-upgrade">
                 <h2>Upgrade Click Power</h2>
                 <p>Cost: <span id="click-upgrade-cost">200</span> Komaru Coins</p>
                 <p>Effect: x2 Clicks</p>
                 <button onclick="buyUpgrade('click-upgrade')">Buy</button>
+            </div>
+
+            <div class="upgrade" upgrade-id="auto-clicker">
+                <h2>Auto Clicker</h2>
+                <p>Cost: <span id="auto-clicker-cost">500</span> Komaru Coins</p>
+                <p>Effect: +1 click per second</p>
+                <button onclick="buyUpgrade('auto-clicker')">Buy</button>
             </div>
         </div>
     </main>
