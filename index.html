@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Komaru Clicker</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.10.5/brython.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.10.5/brython_stdlib.js"></script>
 </head>
-<body>
+<body onload="brython()">
     <div class="KomaruStart">
         <a href="https://t.me/komariikii" target="_blank">Телеграм</a>
         <a href="https://discord.gg/6Zm6NPEbCD" target="_blank">Дискорд</a>
@@ -29,10 +31,10 @@
     </main>
 
     <footer>
-        😺😺 2025 Комару кликер. Все права сьела Комуги.<br>
+        😺😺 2025 Комару кликер. Все права сьела Комуги. (Brython version)<br>
         Powered by <a href="https://github.com/MatveyKostis" target="_blank">MatveyKostis</a>
     </footer>
 
-    <script src="shop-script.js"></script>
+    <script type="text/python" src="clicker.py"></script>
 </body>
 </html>

@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Komaru Shop</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.10.5/brython.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.10.5/brython_stdlib.js"></script>
 </head>
-<body>
+<body onload="brython()">
    <ul class="KomaruStart">
     <a href="index.html">Вернуться к игре</a>
     </ul>
@@ -36,6 +38,6 @@
         Powered by <a href="https://github.com/MatveyKostis" target="_blank">MatveyKostis</a>
     </footer>
 
-    <script src="shop-script.js"></script>
+   <script type="text/python" src="shop.py"></script>
 </body>
 </html>
