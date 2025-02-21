@@ -95,6 +95,9 @@ def buy_upgrade(evt):
             game.coins += 1000000
             game.rebiths += 1
             game.rebith_cost *= 2
+            game.coins = 0
+            game.auto_clicker_count = 0
+            game.click_power = 0
             update_display()
             save_data()
             alert('Перерождение успешно завершено!')
