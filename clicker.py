@@ -13,6 +13,9 @@ class GameState:
         self.click_upgrade_cost = 200
         self.auto_clicker_count = 0
         self.auto_clicker_cost = 500
+        self.rebith_cost = 50000000
+        self.rebiths = 1
+        self.rebith_click = self.rebiths * 2
         self.last_update_time = time.time() * 1000
 
 
@@ -26,6 +29,9 @@ def save_data():
         'click_power': game.click_power,
         'click_upgrade_cost': game.click_upgrade_cost,
         'auto_clicker_count': game.auto_clicker_count,
+        "rebith_cost": game.rebith_cost,
+        "rebiths": game.rebiths,
+        "rebith_click": game.rebith_click,
         'auto_clicker_cost': game.auto_clicker_cost,
         'last_update_time': time.time() * 1000
     }
@@ -42,6 +48,9 @@ def load_data():
             game.click_upgrade_cost = saved_data.get('click_upgrade_cost', 200)
             game.auto_clicker_count = saved_data.get('auto_clicker_count', 0)
             game.auto_clicker_cost = saved_data.get('auto_clicker_cost', 500)
+            game.rebith_cost = saved_data.get('rebith_cost', 50000000)
+            game.rebiths = saved_data.get('rebiths', 1)
+            game.rebith_click = saved_data.get('rebith_click', 1)
             game.last_update_time = saved_data.get('last_update_time', time.time() * 1000)
     except Exception as e:
         print('Error loading data:', e)
@@ -60,8 +69,8 @@ def update_display():
 
 
 def handle_click(evt):
-    game.clicks += game.click_power
-    game.coins += game.click_power
+    game.clicks += game.click_power * game.rebith_click
+    game.coins += game.click_power  * game.rebith_click
     update_display()
     save_data()
 
