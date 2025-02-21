@@ -71,11 +71,18 @@ def handle_auto_clicker():
 
 def handle_rebirth():
     if game.coins >= game.rebith_cost:
-        game.coins = 1000000  # Начальные монеты после перерождения
+        # Сохраняем количество перерождений и увеличиваем его
+        old_rebirths = game.rebiths
         game.rebiths += 1
-        game.rebith_cost *= 2
+
+        # Сбрасываем все значения на дефолтные
+        game.coins = 0
+        game.click_power = 1
+        game.click_upgrade_cost = 200  # Сброс на начальную стоимость
         game.auto_clicker_count = 0
-        game.click_power = 1  # Сброс силы клика
+        game.auto_clicker_cost = 500   # Сброс на начальную стоимость
+        game.rebith_cost *= 2
+
         return True, 'Перерождение успешно завершено!'
     return False, 'Недостаточно монет для перерождения.'
 

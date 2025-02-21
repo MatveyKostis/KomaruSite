@@ -69,8 +69,12 @@ def update_display():
 
 
 def handle_click(evt):
-    game.clicks += game.click_power * game.rebith_click
-    game.coins += game.click_power  * game.rebith_click
+    if game.rebith_click >= 1:
+        game.clicks += game.click_power * game.rebith_click
+        game.coins += game.click_power  * game.rebith_click
+    else:
+        game.clicks += game.click_power
+        game.coins += game.click_power
     update_display()
     save_data()
 
