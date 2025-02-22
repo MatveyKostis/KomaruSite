@@ -70,7 +70,7 @@ def update_display():
 
 def handle_click(evt):
     game.rebith_click = game.rebiths * 2
-    if game.rebith_click > 1:
+    if game.rebith > 1:
         game.clicks += game.click_power * game.rebith_click
         game.coins += game.click_power  * game.rebith_click
     else:
