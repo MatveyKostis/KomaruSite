@@ -83,7 +83,7 @@ def handle_rebirth():
         game.auto_clicker_cost = 500   # Сброс на начальную стоимость
         game.rebith_cost *= 2
 
-        return True, 'Перерождение успешно завершено!'
+        return True, f'Перерождение успешно завершено! Теперь у вас {game.rebiths} перерождений!'
     return False, 'Недостаточно монет для перерождения.'
 
 def buy_upgrade(evt):
