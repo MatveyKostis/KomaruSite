@@ -2,6 +2,7 @@ from browser import document, window, alert, html
 from browser.local_storage import storage
 import json
 import time
+# этот код запускается и используется через Brython, заранее спасибо
 
 class GameState:
     def __init__(self):
